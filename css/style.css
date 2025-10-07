@@ -1,3 +1,113 @@
+<<<<<<< HEAD
+=======
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Fjalla+One&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+:root {
+    --white: #FFFFFF;
+    --black: #111111;
+    --green: #16A34A;
+    --green-light: #22C55E;
+    --red: #DC2626;
+    --yellow: #FACC15;
+    --gray-light: #F3F4F6;
+}
+
+.custom-navbar {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%) !important;
+    border-bottom: 4px solid var(--yellow) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.navbar-brand {
+    font-family: 'Fjalla One', serif !important;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--white) !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem !important;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: var(--yellow) !important;
+    color: var(--black) !important;
+    transform: translateY(-2px);
+}
+
+.card {
+    border: 2px solid var(--gray-light);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+    border-color: var(--green);
+}
+
+.carousel-item {
+    height: 300px;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+}
+
+.carousel-caption h5 {
+    font-family: 'Fjalla One', serif;
+    color: var(--white);
+}
+
+.accordion-button {
+    font-family: 'Fjalla One', serif;
+    background-color: var(--green) !important;
+    color: var(--white) !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--green-light) !important;
+    color: var(--white) !important;
+}
+
+.progress {
+    height: 25px;
+}
+
+.progress-bar {
+    background-color: var(--green) !important;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+
+.btn-group .btn-outline-primary.active {
+    background-color: var(--green);
+    border-color: var(--green);
+    color: white;
+}
+
+.list-group-item:hover {
+    background-color: var(--gray-light);
+}
+
+.page-link {
+    color: var(--green);
+}
+
+.page-item.active .page-link {
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+.alert-warning {
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--black);
+}
+
+
+>>>>>>> origin/main
 @font-face {
     font-family: 'Open Sans';
     src: url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
@@ -13,6 +123,7 @@
     src: url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
 }
 
+<<<<<<< HEAD
 :root {
     --white: #FFFFFF;
     --black: #111111;
@@ -23,6 +134,8 @@
     --gray-light: #F3F4F6;
 }
 
+=======
+>>>>>>> origin/main
 * {
     margin: 0;
     padding: 0;
@@ -174,8 +287,12 @@ h3 {
     overflow: hidden;
 }
 
+<<<<<<< HEAD
 .schedule-table th,
 .schedule-table td {
+=======
+.schedule-table th, .schedule-table td {
+>>>>>>> origin/main
     padding: 1.2rem;
     text-align: left;
     border-bottom: 1px solid var(--gray-light);
@@ -241,8 +358,12 @@ h3 {
     font-size: 1.1rem;
 }
 
+<<<<<<< HEAD
 .form-group input,
 .form-group select {
+=======
+.form-group input, .form-group select {
+>>>>>>> origin/main
     font-family: 'Open Sans', sans-serif;
     width: 100%;
     padding: 0.75rem;
@@ -252,8 +373,12 @@ h3 {
     transition: all 0.3s ease;
 }
 
+<<<<<<< HEAD
 .form-group input:focus,
 .form-group select:focus {
+=======
+.form-group input:focus, .form-group select:focus {
+>>>>>>> origin/main
     outline: none;
     border-color: var(--green);
     box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
@@ -334,6 +459,30 @@ h3 {
     .news-section h2 {
         font-size: 1.8rem;
     }
+<<<<<<< HEAD
+=======
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .carousel-item {
+        height: 200px;
+    }
+    
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .section-title::after {
+        width: 60px;
+    }
+>>>>>>> origin/main
 }
 
 .league-section {
@@ -810,3 +959,40 @@ h3 {
     font-weight: bold;
     font-style: italic;
 }
+<<<<<<< HEAD
+=======
+
+.section-title {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: var(--green);
+    margin: 1rem auto 0;
+}
+
+.carousel-image {
+    height: 400px;
+    object-fit: contain;
+    background-color: #f8f9fa; /* Фон если фото маленькое */
+    padding: 20px;
+}
+
+/* Или если хотите заполнить все пространство */
+.carousel-image.cover {
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Для маленьких иконок можно увеличить */
+.carousel-image.large-icon {
+    height: 400px;
+    object-fit: scale-down;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+>>>>>>> origin/main

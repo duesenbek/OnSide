@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ONSIDE - Football News</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.ico">
     
@@ -69,3 +70,164 @@
     </footer>
 </body>
 </html>
+=======
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/favicon.ico" alt="ONSIDE" width="40" height="40" class="d-inline-block align-text-top me-2">
+                ONSIDE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">News</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="teams.html">Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="schedule.html">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <section class="hero">
+            <h2>Latest Football Updates</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article class="card">
+                        <div class="card-body">
+                            <h3>Match Analysis</h3>
+                            <p>Weekly game breakdowns</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="card">
+                        <div class="card-body">
+                            <h3>Transfer News</h3>
+                            <p>Rumors and confirmed deals</p>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="card">
+                        <div class="card-body">
+                            <h3>League Tables</h3>
+                            <p>Current standings</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="news-section">
+            <h2>Latest News</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <article class="news-card">
+                        <div class="card-body">
+                            <h3>Champions League Quarterfinals</h3>
+                            <p>Draw results and match predictions</p>
+                            <time datetime="2024-03-15">March 15, 2024</time>
+                            <a href="news.html" class="read-more">Read More</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="news-card">
+                        <div class="card-body">
+                            <h3>Transfer Window Updates</h3>
+                            <p>Latest player movements and rumors</p>
+                            <time datetime="2024-03-14">March 14, 2024</time>
+                            <a href="news.html" class="read-more">Read More</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-4">
+                    <article class="news-card">
+                        <div class="card-body">
+                            <h3>Team of the Week</h3>
+                            <p>Best performers from last weekend's matches</p>
+                            <time datetime="2024-03-13">March 13, 2024</time>
+                            <a href="news.html" class="read-more">Read More</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="my-5">
+    <h2 class="text-center mb-4 section-title">Featured Matches</h2>
+    <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner rounded-3">
+            <div class="carousel-item active">
+                <img src="images/messi aura.jpg" class="d-block w-100 carousel-image" alt="Real Madrid">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+                    <h5>Real Madrid vs Barcelona</h5>
+                    <p>El Clásico this weekend at Santiago Bernabéu</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/champleague.jpg" class="d-block w-100 carousel-image" alt="Champions League">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+                    <h5>Champions League Finals</h5>
+                    <p>Manchester City vs Bayern Munich - Don't miss the big match</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/premierleague.jpg" class="d-block w-100 carousel-image" alt="Premier League">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 rounded p-3">
+                    <h5>Premier League Action</h5>
+                    <p>Arsenal and Liverpool battle for title supremacy</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
+        <div class="alert alert-warning alert-dismissible fade show mt-5" role="alert">
+            <strong>Live Updates Available!</strong> Follow our live match commentary and real-time scores.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 ONSIDE</p>
+            <p><strong>ONSIDE</strong> - made for WEB Technologies 1 (Front End) course</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+>>>>>>> origin/main
