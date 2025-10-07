@@ -1,0 +1,961 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Fjalla+One&family=Roboto+Mono:wght@400;500;700&display=swap');
+
+:root {
+    --white: #FFFFFF;
+    --black: #111111;
+    --green: #16A34A;
+    --green-light: #22C55E;
+    --red: #DC2626;
+    --yellow: #FACC15;
+    --gray-light: #F3F4F6;
+}
+
+.custom-navbar {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%) !important;
+    border-bottom: 4px solid var(--yellow) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.navbar-brand {
+    font-family: 'Fjalla One', serif !important;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+}
+
+.navbar-nav .nav-link {
+    color: var(--white) !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem !important;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: var(--yellow) !important;
+    color: var(--black) !important;
+    transform: translateY(-2px);
+}
+
+.card {
+    border: 2px solid var(--gray-light);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+    border-color: var(--green);
+}
+
+.carousel-item {
+    height: 300px;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+}
+
+.carousel-caption h5 {
+    font-family: 'Fjalla One', serif;
+    color: var(--white);
+}
+
+.accordion-button {
+    font-family: 'Fjalla One', serif;
+    background-color: var(--green) !important;
+    color: var(--white) !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--green-light) !important;
+    color: var(--white) !important;
+}
+
+.progress {
+    height: 25px;
+}
+
+.progress-bar {
+    background-color: var(--green) !important;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+}
+
+.btn-group .btn-outline-primary.active {
+    background-color: var(--green);
+    border-color: var(--green);
+    color: white;
+}
+
+.list-group-item:hover {
+    background-color: var(--gray-light);
+}
+
+.page-link {
+    color: var(--green);
+}
+
+.page-item.active .page-link {
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+.alert-warning {
+    background-color: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--black);
+}
+
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+}
+
+@font-face {
+    font-family: 'Fjalla One';
+    src: url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--black);
+    line-height: 1.7;
+    font-weight: normal;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+h1 {
+    font-family: 'Fjalla One', serif;
+    font-size: 2.5rem;
+    color: var(--green);
+    margin: 2rem 0 1.5rem 0;
+    padding: 0 0 1rem 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+h2 {
+    font-family: 'Fjalla One', serif;
+    font-size: 2rem;
+    color: var(--green);
+    margin: 1.5rem 0 1rem 0;
+    padding: 0.5rem 0;
+    font-weight: bold;
+}
+
+h3 {
+    font-family: 'Fjalla One', serif;
+    font-size: 1.5rem;
+    margin: 1rem 0 0.5rem 0;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    color: var(--white);
+    padding: 1.5rem 0;
+    border-bottom: 4px solid var(--yellow);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+    font-family: 'Fjalla One', serif;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.hero {
+    margin: 3rem 0;
+    padding: 2rem 0;
+}
+
+.hero h2 {
+    font-family: 'Fjalla One', serif;
+    text-align: center;
+    color: var(--green);
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: var(--yellow);
+    color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.card {
+    background: var(--white);
+    border: 2px solid var(--gray-light);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--green);
+}
+
+.card h3 {
+    font-family: 'Fjalla One', serif;
+    font-weight: bold;
+}
+
+.card p {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.schedule-table th, .schedule-table td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-light);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.schedule-table th {
+    background-color: var(--green);
+    color: var(--white);
+    font-weight: bold;
+    font-family: 'Fjalla One', serif;
+    font-size: 1.1rem;
+}
+
+.schedule-table td {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.95rem;
+}
+
+.schedule-table tr:hover {
+    background-color: var(--gray-light);
+    transition: background-color 0.3s ease;
+}
+
+.club {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.club-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.league-badge {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.contact-form {
+    max-width: 500px;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--gray-light);
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-family: 'Fjalla One', serif;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--green);
+    font-size: 1.1rem;
+}
+
+.form-group input, .form-group select {
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--gray-light);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.btn-primary {
+    font-family: 'Fjalla One', serif;
+    background-color: var(--green);
+    color: var(--white);
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.footer {
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    padding: 2.5rem 0;
+    margin-top: 4rem;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.8;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+}
+
+.footer strong {
+    font-weight: bold;
+    color: var(--green-light);
+}
+
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .league-section {
+        padding: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .league-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .league-section h3 {
+        font-size: 1.5rem;
+    }
+    
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .news-section h2 {
+        font-size: 1.8rem;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .carousel-item {
+        height: 200px;
+    }
+    
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .section-title::after {
+        width: 60px;
+    }
+}
+
+.league-section {
+    margin: 3rem 0;
+    padding: 2.5rem;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--gray-light);
+    transition: all 0.3s ease;
+}
+
+.league-section:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: var(--green);
+}
+
+.league-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 3px solid var(--green);
+}
+
+.league-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.league-section h3 {
+    font-family: 'Fjalla One', serif;
+    color: var(--green);
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.team-card {
+    background: var(--gray-light);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 1rem 0;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: var(--green);
+    background: var(--white);
+}
+
+.team-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin: 0 auto 1.5rem;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-logo {
+    transform: scale(1.1);
+}
+
+.team-card h4 {
+    font-family: 'Fjalla One', serif;
+    color: var(--black);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.team-card p {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #555;
+}
+
+.news-section {
+    margin: 3rem 0;
+    padding: 2rem 0;
+}
+
+.news-section h2 {
+    color: var(--green);
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.news-section h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: var(--green);
+    margin: 1rem auto 0;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding: 1rem 0;
+}
+
+.news-card {
+    background: var(--white);
+    border: 2px solid var(--gray-light);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--green);
+}
+
+.news-card h3 {
+    font-family: 'Fjalla One', serif;
+    color: var(--black);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.news-card p {
+    font-family: 'Open Sans', sans-serif;
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.news-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.news-card time {
+    font-family: 'Roboto Mono', monospace;
+    color: var(--green);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.read-more {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    transition: all 0.3s ease;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.read-more:hover {
+    background-color: var(--green);
+    color: var(--white);
+    transform: translateX(4px);
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.about-content p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: var(--black);
+}
+
+.about-content h3 {
+    font-family: 'Fjalla One', serif;
+    color: var(--green);
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    font-weight: bold;
+}
+
+.about-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-content li {
+    margin: 1rem 0;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+}
+
+.about-content a {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.about-content a:hover {
+    color: var(--green-light);
+    text-decoration: underline;
+}
+
+.ranking-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+}
+
+.ranking-list li {
+    font-family: 'Roboto Mono', monospace;
+    background: var(--gray-light);
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.ranking-list li:hover {
+    transform: translateY(-4px) scale(1.05);
+    background-color: var(--green);
+    color: var(--white);
+    border-color: var(--green-light);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+#priority-demo {
+    background-color: var(--gray-light);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border: 2px solid var(--green);
+}
+
+#priority-demo h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.demo-text {
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: 4px;
+    color: var(--black);
+}
+
+#main-demo {
+    color: var(--green);
+    font-weight: bold;
+    font-style: italic;
+}
+
+.team-section {
+    margin: 3rem 0;
+    padding: 2rem 0;
+}
+
+.profiles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin: 2rem 0;
+    padding: 1rem 0;
+}
+
+.profile-card {
+    background: var(--white);
+    border: 3px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+}
+
+.profile-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(22, 163, 74, 0.3);
+    border-color: var(--green);
+}
+
+#featured-developer {
+    border-color: var(--yellow);
+    background: linear-gradient(135deg, var(--white) 0%, var(--gray-light) 100%);
+}
+
+#featured-developer:hover {
+    border-color: var(--green-light);
+    box-shadow: 0 12px 24px rgba(250, 204, 21, 0.4);
+    transform: translateY(-10px) scale(1.05);
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--green);
+    padding: 0.5rem;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-name {
+    font-family: 'Fjalla One', serif;
+    font-size: 1.5rem;
+    color: var(--black);
+    margin: 1rem 0 0.5rem 0;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--green);
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.profile-description {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+    margin: 1.5rem 0;
+    padding: 0 1rem;
+    text-align: justify;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--gray-light);
+}
+
+.stat-item {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--black);
+    background-color: var(--gray-light);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.contact-info {
+    margin: 3rem 0;
+    padding: 2rem;
+    background-color: var(--gray-light);
+    border-radius: 12px;
+}
+
+.contact-info h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.info-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 2px solid var(--green);
+    transition: all 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-color: var(--green-light);
+}
+
+.info-card h3 {
+    font-family: 'Fjalla One', serif;
+    color: var(--green);
+    margin-bottom: 1rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+.info-card p {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+#priority-demo {
+    background-color: var(--gray-light);
+    padding: 2rem 0;
+    margin: 2rem 0;
+    border-radius: 8px;
+    border: 2px solid var(--green);
+    text-align: center;
+}
+
+#priority-demo h2 {
+    font-family: 'Fjalla One', serif;
+    color: var(--green);
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.demo-text {
+    font-size: 1.2rem;
+    padding: 1rem;
+    background-color: var(--white);
+    border-radius: 4px;
+    color: var(--black);
+    display: inline-block;
+}
+
+#main-demo {
+    color: var(--green);
+    font-weight: bold;
+    font-style: italic;
+}
+
+.section-title {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: var(--green);
+    margin: 1rem auto 0;
+}
+
+.carousel-image {
+    height: 400px;
+    object-fit: contain;
+    background-color: #f8f9fa; /* Фон если фото маленькое */
+    padding: 20px;
+}
+
+/* Или если хотите заполнить все пространство */
+.carousel-image.cover {
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Для маленьких иконок можно увеличить */
+.carousel-image.large-icon {
+    height: 400px;
+    object-fit: scale-down;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
