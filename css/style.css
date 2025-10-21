@@ -962,3 +962,15 @@ h3 {
     border-radius: 12px;
     padding: 2rem;
 }
+
+.footer .team {
+    margin-top: 0.25rem;
+    color: #9ca3af;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 576px) {
+    .footer {
+        padding: 1.5rem 0;
+    }
+}
