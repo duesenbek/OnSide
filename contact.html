@@ -118,6 +118,35 @@
         </section>
 
         <section class="my-5">
+            <h2 class="text-center mb-4 section-title">Contact Us</h2>
+            <form id="contactForm" novalidate class="mx-auto" style="max-width: 600px;">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" required minlength="2">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" required minlength="3">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" rows="5" required minlength="10"></textarea>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div id="formError" class="alert alert-danger d-none mb-3"></div>
+                <div id="formSuccess" class="alert alert-success d-none mb-3"></div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </section>
+
+        <section class="my-5">
             <h2 class="text-center mb-4 section-title">Frequently Asked Questions</h2>
             <div class="accordion" id="faqAccordion">
                 <div class="accordion-item">
