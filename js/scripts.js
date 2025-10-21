@@ -26,6 +26,55 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('gameForm');
+  var input = document.getElementById('gameInput');
+  var fb = document.getElementById('gameFeedback');
+  var attemptsEl = document.getElementById('gameAttempts');
+  var resetBtn = document.getElementById('gameReset');
+  if (!form || !input || !fb || !attemptsEl || !resetBtn) return;
+  var secret = Math.floor(Math.random() * 100) + 1;
+  var attempts = 0;
+  function setFeedback(type, text) {
+    fb.className = 'alert mt-3';
+    if (type === 'success') fb.classList.add('alert-success');
+    else if (type === 'danger') fb.classList.add('alert-danger');
+    else fb.classList.add('alert-info');
+    fb.textContent = text;
+    fb.classList.remove('d-none');
+  }
+  function setAttempts() {
+    attemptsEl.textContent = String(attempts);
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var val = Number(input.value);
+    if (!val || val < 1 || val > 100) {
+      setFeedback('danger', 'Enter a number between 1 and 100');
+      return;
+    }
+    attempts += 1;
+    setAttempts();
+    if (val === secret) {
+      setFeedback('success', 'Correct! You guessed in ' + attempts + ' attempts');
+      input.disabled = true;
+      return;
+    }
+    if (val < secret) setFeedback('info', 'Too low'); else setFeedback('info', 'Too high');
+    input.focus();
+    input.select();
+  });
+  resetBtn.addEventListener('click', function () {
+    secret = Math.floor(Math.random() * 100) + 1;
+    attempts = 0;
+    setAttempts();
+    fb.classList.add('d-none');
+    input.value = '';
+    input.disabled = false;
+    input.focus();
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('contactForm');
   if (!form) return;
   var nameInput = document.getElementById('name');
