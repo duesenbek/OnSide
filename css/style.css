@@ -956,3 +956,9 @@ h3 {
     object-fit: scale-down;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
+
+.bg-team {
+    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('../images/team_photo.jpg') center/cover no-repeat;
+    border-radius: 12px;
+    padding: 2rem;
+}

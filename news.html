@@ -130,6 +130,30 @@
         </div>
     </main>
 
+    <section class="container my-5">
+        <h2 class="text-center mb-4 section-title">Football To-Do</h2>
+        <form id="todoForm" class="row g-2 justify-content-center" novalidate>
+            <div class="col-12 col-md-5">
+                <input id="todoInput" type="text" class="form-control" placeholder="Add task: write article, match preview..." required minlength="1">
+            </div>
+            <div class="col-12 col-md-3">
+                <select id="todoCategory" class="form-select">
+                    <option value="Article">Article</option>
+                    <option value="Match">Match</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="Injury">Injury</option>
+                    <option value="Training">Training</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button id="todoAdd" type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+        <div id="todoError" class="alert alert-danger d-none mt-3"></div>
+        <ul id="todoList" class="list-group mt-3"></ul>
+    </section>
+
     <footer class="footer">
         <div class="container text-center">
             <p>&copy; 2025 ONSIDE</p>
