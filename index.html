@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>ONSIDE - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -19,24 +20,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="news.html">News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="teams.html">Teams</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="schedule.html">Schedule</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="game.html">Game</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="teams.html">Teams</a></li>
+                    <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="game.html">Game</a></li>
                 </ul>
             </div>
         </div>
@@ -181,6 +170,62 @@
             <strong>Live Updates Available!</strong> Follow our live match commentary and real-time scores.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+
+        
+        <section class="container my-5" id="jq-effects">
+          <h2 class="section-title">jQuery Effects</h2>
+          <p id="pDemo" class="mb-2">This paragraph can be hidden or shown.</p>
+          <div class="btn-group mb-3" role="group">
+            <button id="btnHide" class="btn btn-outline-secondary">Hide</button>
+            <button id="btnShow" class="btn btn-outline-secondary">Show</button>
+            <button id="btnToggle" class="btn btn-outline-secondary">Toggle</button>
+          </div>
+          <div class="mt-4">
+            <img id="imgFade" src="images/premierleague.jpg" alt="demo" style="max-width:240px;" class="rounded border">
+            <div class="btn-group mt-2" role="group">
+              <button id="btnFadeIn" class="btn btn-outline-primary">Fade In</button>
+              <button id="btnFadeOut" class="btn btn-outline-primary">Fade Out</button>
+              <button id="btnFadeToggle" class="btn btn-outline-primary">Fade Toggle</button>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button id="btnSlideToggle" class="btn btn-success mb-2">Slide Panel</button>
+            <div id="panelJQ" class="p-3 bg-light border rounded">
+              <strong>Collapsible panel</strong> controlled by <code>.slideUp/.slideDown/.slideToggle()</code>
+            </div>
+          </div>
+        </section>
+
+        <section class="container my-5" id="jq-dom">
+          <h2 class="section-title">DOM Manipulation with jQuery</h2>
+          <ul id="jqList" class="list-group mb-3">
+            <li class="list-group-item">Item A</li>
+            <li class="list-group-item">Item B</li>
+          </ul>
+          <div class="btn-group mb-4" role="group">
+            <button id="btnAdd" class="btn btn-outline-success">Add Item (.append)</button>
+            <button id="btnPrepend" class="btn btn-outline-success">Prepend Item (.prepend)</button>
+            <button id="btnRemove" class="btn btn-outline-danger">Remove Last (.remove)</button>
+          </div>
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img id="imgSwap" src="images/messi aura.jpg" alt="swap" style="width:180px;" class="rounded border">
+            <button id="btnSwapImg" class="btn btn-outline-dark">Change Image src (.attr)</button>
+          </div>
+          <div class="d-flex align-items-center gap-3">
+            <a id="dynamicLink" href="https://google.com" target="_blank" rel="noopener">Go to Google</a>
+            <button id="btnChangeHref" class="btn btn-outline-dark">Change Link href (.attr)</button>
+          </div>
+        </section>
+
+        <section class="container my-5" id="jq-animate">
+          <h2 class="section-title">Animate a Square</h2>
+          <div id="boxJQ" style="width:100px;height:100px;position:relative;background:#16A34A;border-radius:8px;"></div>
+          <div class="btn-group mt-3" role="group">
+            <button id="btnAnimate" class="btn btn-outline-primary">Step-by-step</button>
+            <button id="btnCombo" class="btn btn-outline-primary">Combined .animate()</button>
+            <button id="btnResetBox" class="btn btn-outline-secondary">Reset</button>
+          </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -190,5 +235,9 @@
         </div>
     </footer>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/scripts.js"></script>
+</body>
+</html>

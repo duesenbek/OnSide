@@ -1,277 +1,244 @@
-document.addEventListener('DOMContentLoaded', function () {
-  var dtEl = document.getElementById('liveDatetime');
-  var select = document.getElementById('bgSelect');
-  if (dtEl) {
-    function tick() {
-      var now = new Date();
-      var opts = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      dtEl.textContent = now.toLocaleString(undefined, opts);
-    }
+$(function () {
+
+  $("h1:contains('Match Schedule'), h1:contains('Football News'), h1:contains('Number Guessing Game')")
+    .css({ letterSpacing: "0.5px" });
+
+  
+  $(".news-card").css({ borderColor: "#16A34A" });
+
+
+  const $dt = $("#liveDatetime");
+  const $bgSel = $("#bgSelect");
+  if ($dt.length) {
+    const tick = () => {
+      const now = new Date();
+      $dt.text(now.toLocaleString(undefined, {
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      }));
+    };
     tick();
     setInterval(tick, 1000);
   }
-  if (select) {
-    var key = 'onside_bg_color';
-    var saved = localStorage.getItem(key) || '';
+  if ($bgSel.length) {
+    const KEY = "onside_bg_color";
+    const saved = localStorage.getItem(KEY) || "";
     if (saved) {
-      document.body.style.backgroundColor = saved;
-      Array.from(select.options).forEach(function (o) { if (o.value === saved) select.value = saved; });
+      $("body").css("backgroundColor", saved);
+      $bgSel.val(saved);
     }
-    select.addEventListener('change', function () {
-      var val = select.value;
-      document.body.style.backgroundColor = val || '';
-      localStorage.setItem(key, val || '');
+    $bgSel.on("change", function () {
+      const val = $(this).val() || "";
+      $("body").css("backgroundColor", val);
+      localStorage.setItem(KEY, val);
     });
   }
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-  var form = document.getElementById('gameForm');
-  var input = document.getElementById('gameInput');
-  var fb = document.getElementById('gameFeedback');
-  var attemptsEl = document.getElementById('gameAttempts');
-  var resetBtn = document.getElementById('gameReset');
-  if (!form || !input || !fb || !attemptsEl || !resetBtn) return;
-  var secret = Math.floor(Math.random() * 100) + 1;
-  var attempts = 0;
-  function setFeedback(type, text) {
-    fb.className = 'alert mt-3';
-    if (type === 'success') fb.classList.add('alert-success');
-    else if (type === 'danger') fb.classList.add('alert-danger');
-    else fb.classList.add('alert-info');
-    fb.textContent = text;
-    fb.classList.remove('d-none');
-  }
-  function setAttempts() {
-    attemptsEl.textContent = String(attempts);
-  }
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var val = Number(input.value);
-    if (!val || val < 1 || val > 100) {
-      setFeedback('danger', 'Enter a number between 1 and 100');
-      return;
-    }
-    attempts += 1;
-    setAttempts();
-    if (val === secret) {
-      setFeedback('success', 'Correct! You guessed in ' + attempts + ' attempts');
-      input.disabled = true;
-      return;
-    }
-    if (val < secret) setFeedback('info', 'Too low'); else setFeedback('info', 'Too high');
-    input.focus();
-    input.select();
+  
+  $("#btnHide").on("click", () => $("#pDemo").hide());
+  $("#btnShow").on("click", () => $("#pDemo").show());
+  $("#btnToggle").on("click", () => $("#pDemo").toggle());
+
+  $("#btnFadeIn").on("click", () => $("#imgFade").fadeIn(300));
+  $("#btnFadeOut").on("click", () => $("#imgFade").fadeOut(300));
+  $("#btnFadeToggle").on("click", () => $("#imgFade").fadeToggle(300));
+
+  $("#btnSlideToggle").on("click", () => $("#panelJQ").slideToggle(250));
+
+
+  $("#btnAdd").on("click", () => $("#jqList").append(`<li class="list-group-item">New Item ${Date.now()}</li>`));
+  $("#btnPrepend").on("click", () => $("#jqList").prepend(`<li class="list-group-item">Prepended ${Date.now()}</li>`));
+  $("#btnRemove").on("click", () => $("#jqList li:last").remove());
+
+  $("#btnSwapImg").on("click", function () {
+    const $img = $("#imgSwap");
+    const cur = $img.attr("src");
+    const alt = (cur && cur.includes("messi")) ? "images/champleague.jpg" : "images/messi aura.jpg";
+    $img.attr("src", alt);
   });
-  resetBtn.addEventListener('click', function () {
-    secret = Math.floor(Math.random() * 100) + 1;
-    attempts = 0;
-    setAttempts();
-    fb.classList.add('d-none');
-    input.value = '';
-    input.disabled = false;
-    input.focus();
+
+  $("#btnChangeHref").on("click", function () {
+    const $a = $("#dynamicLink");
+    const cur = $a.attr("href");
+    const next = (cur && cur.includes("google")) ? "https://wikipedia.org" : "https://google.com";
+    $a.attr("href", next).text(`Go to ${next.replace("https://","")}`);
   });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-  var form = document.getElementById('contactForm');
-  if (!form) return;
-  var nameInput = document.getElementById('name');
-  var emailInput = document.getElementById('email');
-  var subjectInput = document.getElementById('subject');
-  var messageInput = document.getElementById('message');
-  var formError = document.getElementById('formError');
-  var formSuccess = document.getElementById('formSuccess');
+  
+  const resetBox = () => $("#boxJQ").stop(true, true).css({ left: 0, top: 0, width: 100, height: 100, opacity: 1 });
+  $("#btnResetBox").on("click", resetBox);
 
-  function setError(input, msg) {
-    input.classList.add('is-invalid');
-    input.classList.remove('is-valid');
-    var fb = input.parentElement.querySelector('.invalid-feedback');
-    if (fb) fb.textContent = msg;
-  }
+  $("#btnAnimate").on("click", function () {
+    const $b = $("#boxJQ");
+    $b.stop(true, true)
+      .animate({ left: "+=300" }, 600)   // right
+      .animate({ top: "+=180" }, 600)    // down
+      .animate({ width: 50, height: 50, opacity: 0.6 }, 600) // shrink
+      .animate({ left: 0, top: 0, width: 100, height: 100, opacity: 1 }, 600); // back
+  });
 
-  function clearError(input) {
-    input.classList.remove('is-invalid');
-    input.classList.add('is-valid');
-    var fb = input.parentElement.querySelector('.invalid-feedback');
-    if (fb) fb.textContent = '';
-  }
+  $("#btnCombo").on("click", function () {
+    $("#boxJQ").stop(true, true).animate({
+      left: "+=220",
+      top: "+=120",
+      width: 160,
+      height: 160,
+      opacity: 0.7
+    }, 800);
+  });
 
-  function validate() {
-    var valid = true;
-    if (formError) {
-      formError.classList.add('d-none');
-      formError.textContent = '';
-    }
-    if (formSuccess) {
-      formSuccess.classList.add('d-none');
-      formSuccess.textContent = '';
-    }
-
-    var nameVal = nameInput.value.trim();
-    if (nameVal.length < 2) {
-      setError(nameInput, 'Name must be at least 2 characters');
-      valid = false;
-    } else {
-      clearError(nameInput);
-    }
-
-    var emailVal = emailInput.value.trim();
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRe.test(emailVal)) {
-      setError(emailInput, 'Enter a valid email');
-      valid = false;
-    } else {
-      clearError(emailInput);
-    }
-
-    var subjectVal = subjectInput.value.trim();
-    if (subjectVal.length < 3) {
-      setError(subjectInput, 'Subject must be at least 3 characters');
-      valid = false;
-    } else {
-      clearError(subjectInput);
-    }
-
-    var messageVal = messageInput.value.trim();
-    if (messageVal.length < 10) {
-      setError(messageInput, 'Message must be at least 10 characters');
-      valid = false;
-    } else {
-      clearError(messageInput);
-    }
-
-    return valid;
-  }
-
-  [nameInput, emailInput, subjectInput, messageInput].forEach(function (el) {
-    el.addEventListener('input', function () {
-      validate();
+ 
+  $("#jq-gallery .thumb").on("click", function () {
+    const src = $(this).attr("src");
+    const $main = $("#mainImg");
+    $main.stop(true, true).fadeOut(150, function () {
+      $main.attr("src", src).fadeIn(150);
     });
   });
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var ok = validate();
-    if (!ok) {
-      if (formError) {
-        formError.textContent = 'Please fix errors and try again';
-        formError.classList.remove('d-none');
+
+  $("#jq-accordion .acc-panel").hide(); // старт: все скрыты
+  $("#jq-accordion .acc-title").on("click", function () {
+    const $panel = $(this).next(".acc-panel");
+    // сворачиваем другие
+    $("#jq-accordion .acc-panel").not($panel).slideUp(200);
+    $panel.slideToggle(200);
+  });
+
+
+  let bouncing = false;
+  let bounceTimer = null;
+
+  function bounceLoop() {
+    if (!bouncing) return;
+    const $ball = $("#ball");
+    const $pg = $("#playground");
+    const maxX = $pg.width() - $ball.outerWidth();
+    const maxY = $pg.height() - $ball.outerHeight();
+
+    
+    $ball.animate({ left: maxX, top: maxY }, 700)
+         .animate({ left: 0, top: 0 }, 700, function () {
+           if (bouncing) bounceLoop();
+         });
+  }
+
+  $("#startBounce").on("click", function () {
+    if (bouncing) return;
+    bouncing = true;
+    bounceLoop();
+  });
+
+  $("#stopBounce").on("click", function () {
+    bouncing = false;
+    $("#ball").stop(true, true);
+    if (bounceTimer) clearTimeout(bounceTimer);
+  });
+
+  
+  (function initGame(){
+    const $form = $("#gameForm");
+    if (!$form.length) return; // нет на этой странице
+    const $input = $("#gameInput");
+    const $fb = $("#gameFeedback");
+    const $attempts = $("#gameAttempts");
+    const $reset = $("#gameReset");
+    let secret = Math.floor(Math.random() * 100) + 1;
+    let tries = 0;
+
+    function setFeedback(type, text) {
+      $fb.removeClass().addClass("alert mt-3").addClass(`alert-${type}`).text(text).removeClass("d-none");
+    }
+    function setAttempts() { $attempts.text(String(tries)); }
+
+    $form.on("submit", function (e) {
+      e.preventDefault();
+      const val = Number($input.val());
+      if (!val || val < 1 || val > 100) {
+        setFeedback("danger", "Enter a number between 1 and 100");
+        return;
       }
-      return;
-    }
-    if (formSuccess) {
-      formSuccess.textContent = 'Message sent successfully';
-      formSuccess.classList.remove('d-none');
-    }
-    if (formError) formError.classList.add('d-none');
-    form.reset();
-    [nameInput, emailInput, subjectInput, messageInput].forEach(function (el) {
-      el.classList.remove('is-valid', 'is-invalid');
-      var fb = el.parentElement.querySelector('.invalid-feedback');
-      if (fb) fb.textContent = '';
-    });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  var form = document.getElementById('todoForm');
-  var input = document.getElementById('todoInput');
-  var list = document.getElementById('todoList');
-  var errorBox = document.getElementById('todoError');
-  var categorySel = document.getElementById('todoCategory');
-  if (!form || !input || !list) return;
-  var STORAGE_KEY = 'onside_news_todos';
-  function loadTodos() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      var data = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(data)) return [];
-      return data;
-    } catch (e) {
-      return [];
-    }
-  }
-  function saveTodos(items) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }
-  function render(items) {
-    list.innerHTML = '';
-    items.forEach(function (t) {
-      var li = document.createElement('li');
-      li.className = 'list-group-item d-flex align-items-center justify-content-between';
-      var left = document.createElement('div');
-      left.className = 'd-flex align-items-center gap-2';
-      var cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.className = 'form-check-input me-2';
-      cb.dataset.id = String(t.id);
-      cb.checked = !!t.done;
-      var label = document.createElement('label');
-      label.className = 'form-check-label';
-      label.textContent = t.text;
-      var cat = t.category || 'Other';
-      var badge = document.createElement('span');
-      badge.className = 'badge bg-secondary ms-2';
-      badge.textContent = cat;
-      if (t.done) {
-        label.style.textDecoration = 'line-through';
-        li.classList.add('list-group-item-success');
+      tries += 1; setAttempts();
+      if (val === secret) {
+        setFeedback("success", `Correct! You guessed in ${tries} attempts`);
+        $input.prop("disabled", true);
+      } else {
+        setFeedback("info", val < secret ? "Too low" : "Too high");
+        $input.trigger("focus").select();
       }
-      left.appendChild(cb);
-      left.appendChild(label);
-      left.appendChild(badge);
-      var del = document.createElement('button');
-      del.className = 'btn btn-sm btn-outline-danger';
-      del.dataset.action = 'delete';
-      del.dataset.id = String(t.id);
-      del.textContent = 'Delete';
-      li.appendChild(left);
-      li.appendChild(del);
-      list.appendChild(li);
     });
-  }
-  function setError(msg) {
-    if (!errorBox) return;
-    errorBox.textContent = msg || '';
-    if (msg) errorBox.classList.remove('d-none'); else errorBox.classList.add('d-none');
-  }
-  var todos = loadTodos();
-  render(todos);
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var text = (input.value || '').trim();
-    if (text.length === 0) {
-      setError('Task cannot be empty');
-      return;
-    }
-    setError('');
-    var catVal = categorySel && categorySel.value ? categorySel.value : 'Other';
-    var item = { id: Date.now(), text: text, done: false, category: catVal };
-    todos.unshift(item);
-    saveTodos(todos);
+
+    $reset.on("click", function () {
+      secret = Math.floor(Math.random() * 100) + 1;
+      tries = 0; setAttempts();
+      $fb.addClass("d-none");
+      $input.val("").prop("disabled", false).trigger("focus");
+    });
+  })();
+
+  
+  (function initTodo(){
+    const $form = $("#todoForm");
+    if (!$form.length) return;
+    const $input = $("#todoInput");
+    const $list = $("#todoList");
+    const $error = $("#todoError");
+    const $cat = $("#todoCategory");
+    const KEY = "onside_news_todos";
+
+    const load = () => {
+      try { const data = JSON.parse(localStorage.getItem(KEY) || "[]"); return Array.isArray(data) ? data : []; }
+      catch { return []; }
+    };
+    const save = arr => localStorage.setItem(KEY, JSON.stringify(arr));
+
+    let todos = load();
     render(todos);
-    input.value = '';
-    if (categorySel) categorySel.value = categorySel.options[0] ? categorySel.options[0].value : 'Other';
-  });
-  list.addEventListener('click', function (e) {
-    var target = e.target;
-    if (!(target instanceof Element)) return;
-    var id = target.getAttribute('data-id');
-    if (target.getAttribute('data-action') === 'delete' && id) {
-      var idNum = Number(id);
-      todos = todos.filter(function (t) { return t.id !== idNum; });
-      saveTodos(todos);
-      render(todos);
-      return;
+
+    function render(items){
+      $list.empty();
+      items.forEach(t => {
+        const $li = $(`
+          <li class="list-group-item d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-2">
+              <input type="checkbox" class="form-check-input me-2" data-id="${t.id}" ${t.done ? "checked":""}>
+              <label class="form-check-label">${t.text}</label>
+              <span class="badge bg-secondary ms-2">${t.category || "Other"}</span>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${t.id}">Delete</button>
+          </li>
+        `);
+        if (t.done) $li.addClass("list-group-item-success").find("label").css("text-decoration","line-through");
+        $list.append($li);
+      });
     }
-    if (target.matches('input[type="checkbox"]') && id) {
-      var idNum2 = Number(id);
-      todos = todos.map(function (t) { return t.id === idNum2 ? { id: t.id, text: t.text, done: !t.done } : t; });
-      saveTodos(todos);
+
+    function setError(msg){ if (msg){ $error.text(msg).removeClass("d-none"); } else { $error.addClass("d-none").text(""); } }
+
+    $form.on("submit", function(e){
+      e.preventDefault();
+      const text = ($input.val() || "").trim();
+      if (!text) { setError("Task cannot be empty"); return; }
+      setError("");
+      const cat = $cat.val() || "Other";
+      const item = { id: Date.now(), text, done: false, category: cat };
+      todos.unshift(item);
+      save(todos);
       render(todos);
-      return;
-    }
-  });
+      $input.val(""); if ($cat[0]) $cat.prop("selectedIndex", 0);
+    });
+
+    $list.on("click", function(e){
+      const $t = $(e.target);
+      const id = Number($t.data("id"));
+      if ($t.data("action")==="delete" && id){
+        todos = todos.filter(x => x.id !== id);
+        save(todos); render(todos); return;
+      }
+      if ($t.is('input[type="checkbox"]') && id){
+        todos = todos.map(x => x.id===id ? {...x, done: !x.done} : x);
+        save(todos); render(todos); return;
+      }
+    });
+  })();
 });
