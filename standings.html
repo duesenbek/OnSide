@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ONSIDE - League Standings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="icon" href="images/favicon.ico">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/favicon.ico" alt="ONSIDE" width="40" height="40" class="d-inline-block align-text-top me-2">
+                ONSIDE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="teams.html">Teams</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="standings.html">Standings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="game.html">Game</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5">
+        <h1 class="text-center mb-4">League Standings 2024-25</h1>
+        <div class="text-center mb-4"><span class="data-source-badge"><span class="dot"></span>Data: TheSportsDB Free API</span></div>
+
+        <!-- League Tabs -->
+        <ul class="nav nav-tabs mb-4" id="leagueTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pl-tab" data-bs-toggle="tab" data-bs-target="#pl" type="button" role="tab">
+                    Premier League
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="laliga-tab" data-bs-toggle="tab" data-bs-target="#laliga" type="button" role="tab">
+                    La Liga
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bundesliga-tab" data-bs-toggle="tab" data-bs-target="#bundesliga" type="button" role="tab">
+                    Bundesliga
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="seriea-tab" data-bs-toggle="tab" data-bs-target="#seriea" type="button" role="tab">
+                    Serie A
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ligue1-tab" data-bs-toggle="tab" data-bs-target="#ligue1" type="button" role="tab">
+                    Ligue 1
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="leagueTabContent">
+            <!-- Premier League -->
+            <div class="tab-pane fade show active" id="pl" role="tabpanel">
+                <h3 class="mb-3">English Premier League</h3>
+                <div id="pl-table"></div>
+            </div>
+
+            <!-- La Liga -->
+            <div class="tab-pane fade" id="laliga" role="tabpanel">
+                <h3 class="mb-3">Spanish La Liga</h3>
+                <div id="laliga-table"></div>
+            </div>
+
+            <!-- Bundesliga -->
+            <div class="tab-pane fade" id="bundesliga" role="tabpanel">
+                <h3 class="mb-3">German Bundesliga</h3>
+                <div id="bundesliga-table"></div>
+            </div>
+
+            <!-- Serie A -->
+            <div class="tab-pane fade" id="seriea" role="tabpanel">
+                <h3 class="mb-3">Italian Serie A</h3>
+                <div id="seriea-table"></div>
+            </div>
+
+            <!-- Ligue 1 -->
+            <div class="tab-pane fade" id="ligue1" role="tabpanel">
+                <h3 class="mb-3">French Ligue 1</h3>
+                <div id="ligue1-table"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2025 ONSIDE</p>
+            <p class="team">Team: Bekzat Duisenbek, Kuanysh Asaubaev, Nuradilet Mustafa</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/thesportsdb-api.js?v=7"></script>
+    <script src="js/teams-display.js?v=7"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Загрузить турнирные таблицы
+            await displayLeagueTable('4328', 'English Premier League', 'pl-table');
+            
+            // Обработчики для табов
+            document.getElementById('laliga-tab').addEventListener('shown.bs.tab', async function() {
+                await displayLeagueTable('4335', 'Spanish La Liga', 'laliga-table');
+            });
+            
+            document.getElementById('bundesliga-tab').addEventListener('shown.bs.tab', async function() {
+                await displayLeagueTable('4331', 'German Bundesliga', 'bundesliga-table');
+            });
+            
+            document.getElementById('seriea-tab').addEventListener('shown.bs.tab', async function() {
+                await displayLeagueTable('4332', 'Italian Serie A', 'seriea-table');
+            });
+            
+            document.getElementById('ligue1-tab').addEventListener('shown.bs.tab', async function() {
+                await displayLeagueTable('4334', 'French Ligue 1', 'ligue1-table');
+            });
+        });
+    </script>
+</body>
+</html>

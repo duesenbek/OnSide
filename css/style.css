@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Fjalla+One&family=Roboto+Mono:wght@400;500;700&display=swap');
+@import 'news-styles.css';
+@import 'animations.css';
 
 :root {
     --white: #FFFFFF;
@@ -1098,4 +1100,39 @@ h3 {
     .match-score {
         font-size: 1.2rem;
     }
+}
+
+/* External data source badge */
+.data-source-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--gray-light);
+    color: var(--black);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+}
+.data-source-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #0ea5e9;
+}
+
+/* Generic competition badge */
+.comp-badge {
+    color: #fff;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+}
+
+/* Schedule responsive tweaks */
+@media (max-width: 576px) {
+    th.col-venue, td.col-venue { display: none; }
+    .schedule-table td, .schedule-table th { font-size: 0.9rem; }
 }

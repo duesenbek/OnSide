@@ -22,6 +22,7 @@
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="news.html">News</a></li>
                     <li class="nav-item"><a class="nav-link" href="teams.html">Teams</a></li>
+                    <li class="nav-item"><a class="nav-link" href="standings.html">Standings</a></li>
                     <li class="nav-item"><a class="nav-link active" href="schedule.html">Schedule</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="game.html">Game</a></li>
@@ -33,6 +34,22 @@
     <main class="container my-5">
         <h1 class="text-center mb-5">Match Schedule</h1>
         
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <div class="btn-group" id="schCompFilter" role="group" aria-label="Competition">
+                <button type="button" class="btn btn-outline-primary active" data-competition="all">All</button>
+                <button type="button" class="btn btn-outline-primary" data-competition="PL">PL</button>
+                <button type="button" class="btn btn-outline-primary" data-competition="PD">La Liga</button>
+                <button type="button" class="btn btn-outline-primary" data-competition="BL1">Bundesliga</button>
+                <button type="button" class="btn btn-outline-primary" data-competition="SA">Serie A</button>
+            </div>
+            <select id="schRange" class="form-select form-select-sm" style="width:auto;">
+                <option value="today">Today</option>
+                <option value="3">Next 3 days</option>
+                <option value="7" selected>Next 7 days</option>
+            </select>
+        </div>
+        <div class="mb-2"><span class="data-source-badge"><span class="dot"></span>Data: January 2025 Fixtures</span></div>
+
         <div class="table-responsive">
             <table class="schedule-table table table-striped table-hover">
                 <thead>
@@ -41,66 +58,63 @@
                         <th>Date</th>
                         <th>Time</th>
                         <th>League</th>
-                        <th>Venue</th>
+                        <th class="col-venue">Venue</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="scheduleBody">
                     <tr>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <img src="images/fckairat.ico" alt="FC Kairat" width="20" height="20" class="me-2">
-                                FC Kairat
-                                <span class="mx-2">vs</span>
-                                <img src="images/FC_Astana_Logo.svg.png" alt="FC Astana" width="20" height="20" class="me-2">
-                                FC Astana
+                        <td colspan="5" class="text-center">
+                            <div class="spinner-border text-primary spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
                             </div>
+                            <span class="ms-2">Loading fixtures...</span>
                         </td>
-                        <td>21.10.2025</td>
-                        <td>18:30</td>
-                        <td>Kazakhstan Premier League</td>
-                        <td>Central Stadium</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <section class="my-5">
-            <h2 class="text-center mb-4 section-title">Season Progress</h2>
+            <h2 class="text-center mb-4 section-title">Premier League 2024-25 Season Stats</h2>
             <div class="progress mb-3" style="height: 25px;">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                    65% of Season Completed
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100">
+                    52% of Season Completed (20/38 matches)
                 </div>
             </div>
-            <div class="row text-center">
+            <div class="row text-center g-3">
                 <div class="col-md-3">
-                    <div class="card bg-light">
+                    <div class="card bg-light h-100">
                         <div class="card-body">
                             <h5 class="card-title">Matches Played</h5>
-                            <p class="card-text fs-4 fw-bold">12</p>
+                            <p class="card-text fs-4 fw-bold text-primary">200</p>
+                            <small class="text-muted">Across all teams</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-light">
+                    <div class="card bg-light h-100">
                         <div class="card-body">
                             <h5 class="card-title">Remaining</h5>
-                            <p class="card-text fs-4 fw-bold">15</p>
+                            <p class="card-text fs-4 fw-bold text-warning">180</p>
+                            <small class="text-muted">Until season end</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-light">
+                    <div class="card bg-light h-100">
                         <div class="card-body">
-                            <h5 class="card-title">Goals Scored</h5>
-                            <p class="card-text fs-4 fw-bold">89</p>
+                            <h5 class="card-title">Total Goals</h5>
+                            <p class="card-text fs-4 fw-bold text-success">542</p>
+                            <small class="text-muted">2.71 per match</small>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card bg-light">
+                    <div class="card bg-light h-100">
                         <div class="card-body">
                             <h5 class="card-title">Avg. Attendance</h5>
-                            <p class="card-text fs-4 fw-bold">15,231</p>
+                            <p class="card-text fs-4 fw-bold text-info">38,492</p>
+                            <small class="text-muted">Per match</small>
                         </div>
                     </div>
                 </div>

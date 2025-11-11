@@ -242,19 +242,42 @@ $(function () {
     });
   })();
 
+  // Storage helpers for favorites and history
+  const Storage = {
+    getJSON(key, fallback){
+      try { return JSON.parse(localStorage.getItem(key) || 'null') ?? fallback; } catch { return fallback; }
+    },
+    setJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+  };
+  const FAV_MATCHES_KEY = 'onside_fav_matches';
+  const FAV_TEAMS_KEY = 'onside_fav_teams';
+  const MATCH_HISTORY_KEY = 'onside_match_history';
+  const Favorites = {
+    isMatchFav(id){ const s = Storage.getJSON(FAV_MATCHES_KEY, []); return s.includes(id); },
+    toggleMatch(id){ const s = Storage.getJSON(FAV_MATCHES_KEY, []); const i = s.indexOf(id); if (i>=0) s.splice(i,1); else s.push(id); Storage.setJSON(FAV_MATCHES_KEY, s); return s.includes(id); },
+    isTeamFav(id){ const s = Storage.getJSON(FAV_TEAMS_KEY, []); return s.includes(id); },
+    toggleTeam(id){ const s = Storage.getJSON(FAV_TEAMS_KEY, []); const i = s.indexOf(id); if (i>=0) s.splice(i,1); else s.push(id); Storage.setJSON(FAV_TEAMS_KEY, s); return s.includes(id); }
+  };
+  const History = {
+    addMatchView(item){
+      const list = Storage.getJSON(MATCH_HISTORY_KEY, []);
+      list.unshift({ ...item, viewedAt: Date.now() });
+      const unique = [];
+      const seen = new Set();
+      for (const it of list){ if (!seen.has(it.id)){ unique.push(it); seen.add(it.id); } if (unique.length>=50) break; }
+      Storage.setJSON(MATCH_HISTORY_KEY, unique);
+    }
+  };
+  // Centralized API config
+  const CONFIG = { API_KEY: '' };
+
   // Football API Integration
   (function initFootballAPI(){
-    // You need to get your API key from https://api.football-data.org/
-    const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
+    if (typeof FootballAPI !== 'function') return;
+    const API_KEY = CONFIG.API_KEY;
     
     // Only initialize on news page
     if (!window.location.pathname.includes('news.html')) return;
-    
-    if (API_KEY === 'YOUR_API_KEY_HERE') {
-      // Show demo data if no API key is provided
-      showDemoData();
-      return;
-    }
     
     const api = new FootballAPI(API_KEY);
     
@@ -269,6 +292,9 @@ $(function () {
     
     // Load league standings
     loadStandings();
+    // Render favorites and history sections
+    renderFavMatches();
+    renderMatchHistory();
     
     async function loadLiveMatches() {
       try {
@@ -295,7 +321,7 @@ $(function () {
           status: 'FINISHED'
         });
         
-        displayMatches(matches.matches.slice(0, 6), '#recentResults', 'result');
+        displayMatches((matches.matches || []).slice(0, 12), '#recentResults', 'result');
       } catch (error) {
         console.error('Error loading recent results:', error);
         showError('#recentResults', 'Unable to load recent results');
@@ -312,7 +338,7 @@ $(function () {
           status: 'SCHEDULED'
         });
         
-        displayMatches(matches.matches.slice(0, 6), '#upcomingMatches', 'upcoming');
+        displayMatches((matches.matches || []).slice(0, 12), '#upcomingMatches', 'upcoming');
       } catch (error) {
         console.error('Error loading upcoming matches:', error);
         showError('#upcomingMatches', 'Unable to load upcoming matches');
@@ -389,6 +415,10 @@ $(function () {
                   ${utcDate.toLocaleDateString()} ${utcDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                 </small>
               </div>
+              <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-sm btn-outline-primary btn-match-details" data-match-id="${match.id}">Details</button>
+                <button class="btn btn-sm btn-outline-warning btn-fav-match ${Favorites.isMatchFav(match.id) ? 'active' : ''}" data-match-id="${match.id}">${Favorites.isMatchFav(match.id) ? '★ Fav' : '☆ Fav'}</button>
+              </div>
             </div>
           </div>
         </div>
@@ -397,6 +427,92 @@ $(function () {
     
     function showError(containerId, message) {
       $(containerId).html(`<div class="col-12 text-center"><p class="text-danger">${message}</p></div>`);
+    }
+    
+    // Delegated handlers for details and favorites on news page
+    $(document).on('click', '.btn-fav-match', function(){
+      const id = Number($(this).data('match-id'));
+      if (!id) return;
+      const on = Favorites.toggleMatch(id);
+      $(this).toggleClass('active', on).text(on ? '★ Fav' : '☆ Fav');
+      renderFavMatches();
+    });
+    
+    $(document).on('click', '.btn-match-details', async function(){
+      const id = Number($(this).data('match-id'));
+      if (!id) return;
+      await openMatchModal(id);
+    });
+    
+    async function openMatchModal(matchId){
+      const modalEl = document.getElementById('matchModal');
+      if (!modalEl) return;
+      const modal = new bootstrap.Modal(modalEl);
+      $('#matchModalTitle').text('Match details');
+      $('#matchModalBody').html('<div class="text-center py-4"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+      modal.show();
+      try{
+        const data = await api.getMatch(matchId);
+        const m = data.match || data;
+        const dt = new Date(m.utcDate);
+        const html = `
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-center flex-grow-1"><strong>${m.homeTeam?.name || 'Home'}</strong></div>
+            <div class="px-3">${m.score?.fullTime?.home ?? 0} - ${m.score?.fullTime?.away ?? 0}</div>
+            <div class="text-center flex-grow-1"><strong>${m.awayTeam?.name || 'Away'}</strong></div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Competition:</strong> ${m.competition?.name || '—'}</li>
+            <li class="list-group-item"><strong>Status:</strong> ${m.status}</li>
+            <li class="list-group-item"><strong>Date:</strong> ${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</li>
+            <li class="list-group-item"><strong>Venue:</strong> ${m.venue || '—'}</li>
+          </ul>`;
+        $('#matchModalTitle').text(`${m.competition?.name || ''}`);
+        $('#matchModalBody').html(html);
+        History.addMatchView({ id: m.id, homeTeam: m.homeTeam?.name, awayTeam: m.awayTeam?.name, competition: m.competition?.name, utcDate: m.utcDate });
+        renderMatchHistory();
+      }catch(e){
+        $('#matchModalBody').html('<p class="text-danger">Failed to load match details.</p>');
+      }
+    }
+    
+    async function renderFavMatches(){
+      const ids = Storage.getJSON(FAV_MATCHES_KEY, []);
+      const $wrap = $('#favMatches');
+      if (!$wrap.length) return;
+      if (!ids.length){ $wrap.html('<div class="col-12 text-center text-muted">No favorite matches yet</div>'); return; }
+      try{
+        const idStr = ids.slice(0, 10).join(',');
+        const data = await api.getMatches({ ids: idStr });
+        const items = data.matches || [];
+        if (!items.length){ $wrap.html('<div class="col-12 text-center text-muted">No favorite matches yet</div>'); return; }
+        const html = items.map(m => {
+          const score = m.score?.fullTime || {}; const dt = new Date(m.utcDate);
+          return `
+            <div class="col-md-6 col-lg-4">
+              <div class="card h-100">
+                <div class="card-body text-center">
+                  <div class="fw-bold mb-1">${m.homeTeam?.name || 'Home'} vs ${m.awayTeam?.name || 'Away'}</div>
+                  <div class="mb-1">${score.home ?? 0} - ${score.away ?? 0}</div>
+                  <small class="text-muted">${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</small>
+                </div>
+              </div>
+            </div>`;
+        }).join('');
+        $wrap.html(html);
+      }catch{ $wrap.html('<div class="col-12 text-center text-danger">Failed to load favorites</div>'); }
+    }
+    
+    function renderMatchHistory(){
+      const list = Storage.getJSON(MATCH_HISTORY_KEY, []);
+      const $wrap = $('#matchHistory');
+      if (!$wrap.length) return;
+      if (!list.length){ $wrap.html('<div class="list-group-item text-center text-muted">No history yet</div>'); return; }
+      const html = list.slice(0, 10).map(m => {
+        const dt = new Date(m.utcDate || m.viewedAt);
+        return `<div class="list-group-item d-flex justify-content-between"><span>${m.homeTeam || 'Home'} vs ${m.awayTeam || 'Away'}</span><small class="text-muted">${dt.toLocaleDateString()} ${dt.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</small></div>`;
+      }).join('');
+      $wrap.html(html);
     }
     
     async function loadStandings() {
@@ -455,76 +571,22 @@ $(function () {
       return '';
     }
     
-    function showDemoData() {
-      // Show demo data when no API key is provided
-      const demoMatches = [
-        {
-          homeTeam: { name: 'Real Madrid' },
-          awayTeam: { name: 'Barcelona' },
-          competition: { name: 'La Liga' },
-          status: 'LIVE',
-          score: { fullTime: { home: 2, away: 1 } },
-          utcDate: new Date().toISOString()
-        },
-        {
-          homeTeam: { name: 'Manchester City' },
-          awayTeam: { name: 'Liverpool' },
-          competition: { name: 'Premier League' },
-          status: 'FINISHED',
-          score: { fullTime: { home: 3, away: 1 } },
-          utcDate: new Date(Date.now() - 86400000).toISOString()
-        },
-        {
-          homeTeam: { name: 'Bayern Munich' },
-          awayTeam: { name: 'Borussia Dortmund' },
-          competition: { name: 'Bundesliga' },
-          status: 'SCHEDULED',
-          score: { fullTime: { home: null, away: null } },
-          utcDate: new Date(Date.now() + 86400000).toISOString()
-        }
-      ];
-      
-      const demoStandings = [
-        { position: 1, team: { name: 'Manchester City' }, playedGames: 15, won: 12, draw: 2, lost: 1, points: 38 },
-        { position: 2, team: { name: 'Arsenal' }, playedGames: 15, won: 11, draw: 3, lost: 1, points: 36 },
-        { position: 3, team: { name: 'Liverpool' }, playedGames: 15, won: 10, draw: 4, lost: 1, points: 34 },
-        { position: 4, team: { name: 'Chelsea' }, playedGames: 15, won: 9, draw: 3, lost: 3, points: 30 },
-        { position: 5, team: { name: 'Tottenham' }, playedGames: 15, won: 8, draw: 4, lost: 3, points: 28 },
-        { position: 6, team: { name: 'Manchester United' }, playedGames: 15, won: 7, draw: 4, lost: 4, points: 25 }
-      ];
-      
-      displayMatches([demoMatches[0]], '#liveMatches', 'live');
-      displayMatches([demoMatches[1]], '#recentResults', 'result');
-      displayMatches([demoMatches[2]], '#upcomingMatches', 'upcoming');
-      displayStandings(demoStandings, '#plStandings');
-      displayStandings(demoStandings.slice(0, 5), '#clStandings');
-      
-      // Show API key notice
-      $('.container').prepend(`
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Demo Mode:</strong> Get your free API key from <a href="https://api.football-data.org/" target="_blank">api.football-data.org</a> to see real football data.
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      `);
-    }
   })();
 
   // Teams Page API Integration
   (function initTeamsAPI(){
-    const API_KEY = 'YOUR_API_KEY_HERE';
+    const API_KEY = CONFIG.API_KEY;
     
     if (!window.location.pathname.includes('teams.html')) return;
-    
-    if (API_KEY === 'YOUR_API_KEY_HERE') {
-      showDemoTeams();
-      return;
-    }
+    if (typeof FootballAPI !== 'function') { showDemoTeams(); return; }
     
     const api = new FootballAPI(API_KEY);
     let currentCompetition = 'all';
     
     loadTeams();
     setupFilterButtons();
+    loadCompetitions();
+    renderFavTeams();
     
     function setupFilterButtons() {
       $('.btn-group .btn').on('click', function() {
@@ -549,21 +611,12 @@ $(function () {
         let teams = [];
         
         if (currentCompetition === 'all') {
-          // Load teams from multiple competitions
-          const competitions = ['PL', 'PD', 'BL1', 'SA'];
-          const teamPromises = competitions.map(comp => 
-            api.getCompetitionTeams(comp).catch(() => ({ teams: [] }))
+          // Default: Premier competitions sample to avoid massive calls
+          const defaults = ['PL','PD','BL1','SA','CL'];
+          const results = await Promise.all(
+            defaults.map(code => api.getCompetitionTeams(code).catch(() => ({ teams: [] })))
           );
-          
-          const results = await Promise.all(teamPromises);
-          const allTeams = results.flatMap(result => result.teams || []);
-          
-          // Remove duplicates and limit to 24 teams
-          const uniqueTeams = allTeams.filter((team, index, self) => 
-            index === self.findIndex(t => t.id === team.id)
-          ).slice(0, 24);
-          
-          teams = uniqueTeams;
+          teams = results.flatMap(r => r.teams || []).filter((t,i,a)=>i===a.findIndex(x=>x.id===t.id)).slice(0, 36);
         } else {
           const result = await api.getCompetitionTeams(currentCompetition);
           teams = result.teams || [];
@@ -618,6 +671,7 @@ $(function () {
                 <button class="btn btn-sm btn-outline-primary" onclick="viewTeamDetails(${team.id})">
                   View Details
                 </button>
+                <button class="btn btn-sm btn-outline-warning btn-fav-team ${Favorites.isTeamFav(team.id) ? 'active' : ''}" data-team-id="${team.id}">${Favorites.isTeamFav(team.id) ? '★ Fav' : '☆ Fav'}</button>
               </div>
             </div>
           </article>
@@ -649,6 +703,38 @@ $(function () {
       return colors[code] || '#6c757d';
     }
     
+    // Delegated handler for favorite team toggle
+    $(document).on('click', '.btn-fav-team', function(){
+      const id = Number($(this).data('team-id'));
+      if (!id) return;
+      const on = Favorites.toggleTeam(id);
+      $(this).toggleClass('active', on).text(on ? '★ Fav' : '☆ Fav');
+      renderFavTeams();
+    });
+    
+    async function renderFavTeams(){
+      const ids = Storage.getJSON(FAV_TEAMS_KEY, []);
+      const $wrap = $('#favTeams');
+      if (!$wrap.length) return;
+      if (!ids.length){ $wrap.html('<div class="col-12 text-center text-muted">No favorite teams yet</div>'); return; }
+      try{
+        const apiCalls = ids.slice(0, 12).map(id => api.getTeam(id).catch(()=>null));
+        const results = (await Promise.all(apiCalls)).filter(Boolean);
+        if (!results.length){ $wrap.html('<div class="col-12 text-center text-muted">No favorite teams yet</div>'); return; }
+        const html = results.map(t => `
+          <div class="col-sm-6 col-lg-4">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <img src="${t.crest || 'images/default-team.png'}" alt="${t.name}" class="team-logo mb-2" onerror="this.src='images/default-team.png'">
+                <div class="fw-bold">${t.name}</div>
+                <small class="text-muted">${t.area?.name || ''}</small>
+              </div>
+            </div>
+          </div>`).join('');
+        $wrap.html(html);
+      }catch{ $wrap.html('<div class="col-12 text-center text-danger">Failed to load favorite teams</div>'); }
+    }
+    
     function showDemoTeams() {
       const demoTeams = [
         { id: 57, name: 'Arsenal', area: { name: 'England' }, founded: 1886, crest: 'images/arsenal.png', competitions: [{ code: 'PL' }] },
@@ -664,19 +750,128 @@ $(function () {
       
       displayTeams(demoTeams);
       
-      // Show API key notice
-      $('.container').prepend(`
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-          <strong>Demo Mode:</strong> Get your free API key from <a href="https://api.football-data.org/" target="_blank">api.football-data.org</a> to see real team data.
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      `);
     }
-    
     // Make function global for onclick handlers
     window.viewTeamDetails = function(teamId) {
       alert(`Team details for ID: ${teamId}. This would open a detailed view of the team.`);
     };
   })();
+  (function initSchedule(){
+    if (!document.getElementById('scheduleBody')) return;
+    
+    function showDemoSchedule(){
+      const rows = [
+        {home:'Liverpool', away:'Arsenal', date:'Jan 14, 2025', time:'17:30', comp:'Premier League', venue:'Anfield'},
+        {home:'Real Madrid', away:'Barcelona', date:'Jan 15, 2025', time:'21:00', comp:'La Liga', venue:'Santiago Bernabéu'},
+        {home:'Bayern Munich', away:'Dortmund', date:'Jan 13, 2025', time:'18:30', comp:'Bundesliga', venue:'Allianz Arena'},
+        {home:'Man City', away:'Chelsea', date:'Jan 14, 2025', time:'15:00', comp:'Premier League', venue:'Etihad Stadium'},
+        {home:'Inter Milan', away:'AC Milan', date:'Jan 15, 2025', time:'20:45', comp:'Serie A', venue:'San Siro'},
+        {home:'PSG', away:'Monaco', date:'Jan 13, 2025', time:'21:00', comp:'Ligue 1', venue:'Parc des Princes'},
+        {home:'Atletico Madrid', away:'Sevilla', date:'Jan 14, 2025', time:'16:15', comp:'La Liga', venue:'Wanda Metropolitano'},
+        {home:'Tottenham', away:'Man United', date:'Jan 15, 2025', time:'14:00', comp:'Premier League', venue:'Tottenham Hotspur Stadium'}
+      ].map(m => `<tr>
+        <td><div class="d-flex align-items-center justify-content-between"><span>${m.home}</span><span class="mx-2">vs</span><span>${m.away}</span></div></td>
+        <td>${m.date}</td><td>${m.time}</td>
+        <td><span class="comp-badge" style="background-color:#6c757d">${m.comp}</span></td>
+        <td class="col-venue">${m.venue}</td>
+      </tr>`).join('');
+      if (window.jQuery) {
+        $('#scheduleBody').html(rows);
+      } else {
+        const el = document.getElementById('scheduleBody');
+        if (el) el.innerHTML = rows;
+      }
+    }
+    
+    if (typeof FootballAPI !== 'function') { showDemoSchedule(); return; }
+    const API_KEY = CONFIG.API_KEY;
+    let competition = 'all';
+    let range = '7';
+    function setupFilters(){
+      $('#schCompFilter .btn').on('click', function(){
+        $('#schCompFilter .btn').removeClass('active');
+        $(this).addClass('active');
+        competition = $(this).data('competition') || 'all';
+        load();
+      });
+      $('#schRange').on('change', function(){
+        range = $(this).val() || '7';
+        load();
+      });
+    }
+    function setLoading(){
+      $('#scheduleBody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><p class="mt-2">Loading fixtures...</p></td></tr>');
+    }
+    function getCompColorByName(name){
+      const n = (name || '').toLowerCase();
+      if (n.includes('premier')) return '#6CABDD'; // PL
+      if (n.includes('la liga')) return '#FABE00'; // La Liga
+      if (n.includes('bundes')) return '#D20614'; // Bundesliga
+      if (n.includes('serie a')) return '#006A4E'; // Serie A
+      if (n.includes('ligue 1')) return '#CE2927'; // Ligue 1
+      if (n.includes('champions')) return '#00529F'; // UCL
+      return '#6c757d';
+    }
+    function formatRow(match){
+      const home = match.homeTeam?.name || 'Home';
+      const away = match.awayTeam?.name || 'Away';
+      const compName = match.competition?.name || '—';
+      const compColor = getCompColorByName(compName);
+      const dt = new Date(match.utcDate);
+      const dateStr = dt.toLocaleDateString();
+      const timeStr = dt.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+      const venue = match.venue || '—';
+      return `<tr>
+        <td><div class="d-flex align-items-center justify-content-between"><span>${home}</span><span class="mx-2">vs</span><span>${away}</span></div></td>
+        <td>${dateStr}</td>
+        <td>${timeStr}</td>
+        <td><span class="comp-badge" style="background-color:${compColor}">${compName}</span></td>
+        <td class="col-venue">${venue}</td>
+      </tr>`;
+    }
+    function display(matches){
+      if (!matches || !matches.length){
+        $('#scheduleBody').html('<tr><td colspan="5" class="text-center text-muted">No fixtures found</td></tr>');
+        return;
+      }
+      const rows = matches.slice(0, 20).map(formatRow).join('');
+      $('#scheduleBody').html(rows);
+    }
+    async function load(){
+      setLoading();
+      try{
+        const api = new FootballAPI(API_KEY);
+        const today = FootballAPI.getToday();
+        let days = range === 'today' ? 0 : parseInt(range, 10) || 7;
+        const dateTo = days === 0 ? today : FootballAPI.getDateFromNow(days);
+        const params = { dateFrom: today, dateTo };
+        if (competition !== 'all') params.competitions = competition;
+        const data = await api.getMatches(params);
+        display(data.matches || []);
+      }catch(e){
+        $('#scheduleBody').html('<tr><td colspan="5" class="text-center text-danger">Unable to load fixtures</td></tr>');
+      }
+    }
+    
+    // Competitions dropdown
+    (async function loadSchCompetitions(){
+      try{
+        const api = new FootballAPI(API_KEY);
+        const data = await api.getCompetitions();
+        const list = data.competitions || [];
+        const $btnGroup = $('#schCompFilter');
+        const $sel = $('<select id="schCompSelect" class="form-select form-select-sm ms-2" style="width:auto;display:inline-block;"></select>');
+        $sel.append('<option value="all">All</option>');
+        list.filter(c=> (c.area?.name||'').toLowerCase().includes('kazakhstan')).forEach(c=>{
+          $sel.append(`<option value="${c.code || c.id}">Kazakhstan • ${c.name}</option>`);
+        });
+        const preferred = ['PL','PD','BL1','SA','FL1','CL'];
+        list.filter(c=>preferred.includes(c.code)).forEach(c=>{ $sel.append(`<option value="${c.code}">${c.name}</option>`); });
+        $btnGroup.after($sel);
+        $sel.on('change', function(){ competition = $(this).val() || 'all'; load(); });
+      }catch(e){/* silent */}
+    })();
+    setupFilters();
+    load();
   })();
 });

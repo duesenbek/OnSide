@@ -1,0 +1,375 @@
+/* ============================================
+   АНИМАЦИИ ДЛЯ ONSIDE
+   ============================================ */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide In From Left */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide In From Right */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scale In */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bounce In */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Rotate In */
+@keyframes rotateIn {
+    from {
+        opacity: 0;
+        transform: rotate(-200deg);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(0);
+    }
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(13, 110, 253, 0.8), 0 0 30px rgba(13, 110, 253, 0.6);
+    }
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Float Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* ============================================
+   ПРИМЕНЕНИЕ АНИМАЦИЙ К ЭЛЕМЕНТАМ
+   ============================================ */
+
+/* Navbar Animation */
+.navbar {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+/* Hero Section */
+.hero-section h1 {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.hero-section p {
+    animation: fadeIn 1s ease-out 0.2s backwards;
+}
+
+/* News Cards */
+.news-card {
+    animation: scaleIn 0.5s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.news-card:nth-child(1) { animation-delay: 0.1s; }
+.news-card:nth-child(2) { animation-delay: 0.2s; }
+.news-card:nth-child(3) { animation-delay: 0.3s; }
+.news-card:nth-child(4) { animation-delay: 0.4s; }
+.news-card:nth-child(5) { animation-delay: 0.5s; }
+.news-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Team Cubes */
+.team-cube {
+    animation: bounceIn 0.6s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.team-cube:nth-child(1) { animation-delay: 0.05s; }
+.team-cube:nth-child(2) { animation-delay: 0.1s; }
+.team-cube:nth-child(3) { animation-delay: 0.15s; }
+.team-cube:nth-child(4) { animation-delay: 0.2s; }
+.team-cube:nth-child(5) { animation-delay: 0.25s; }
+.team-cube:nth-child(6) { animation-delay: 0.3s; }
+
+/* Hover Effects */
+.news-card:hover {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.team-cube:hover {
+    animation: float 1s ease-in-out infinite;
+}
+
+/* Buttons */
+.btn-primary {
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    animation: pulse 0.3s ease;
+}
+
+/* Badges */
+.badge {
+    animation: fadeIn 0.5s ease-out;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+}
+
+/* Data Source Badge */
+.data-source-badge {
+    animation: slideInRight 0.6s ease-out;
+}
+
+.data-source-badge .dot {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Section Titles */
+.section-title {
+    animation: fadeIn 0.8s ease-out;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #0d6efd, #6610f2);
+    animation: expandWidth 1s ease-out 0.5s forwards;
+}
+
+@keyframes expandWidth {
+    to {
+        width: 100px;
+    }
+}
+
+/* Accordion Animation */
+.accordion-button {
+    transition: all 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* Table Rows */
+.table tbody tr {
+    animation: fadeIn 0.4s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.2s; }
+.table tbody tr:nth-child(5) { animation-delay: 0.25s; }
+
+/* Loading Spinner */
+.spinner-border {
+    animation: pulse 1s ease-in-out infinite;
+}
+
+/* Modal Animation */
+.modal.fade .modal-dialog {
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* Card Hover Lift */
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Carousel Animation */
+.carousel-item {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Footer Animation */
+.footer {
+    animation: slideInLeft 0.8s ease-out;
+}
+
+/* Progress Bar Animation */
+.progress-bar {
+    animation: expandWidth 1.5s ease-out;
+}
+
+/* Featured Match Cards */
+.featured-match {
+    animation: slideInLeft 0.6s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.featured-match:nth-child(odd) {
+    animation-name: slideInLeft;
+}
+
+.featured-match:nth-child(even) {
+    animation-name: slideInRight;
+}
+
+/* Gradient Background Animation */
+.gradient-bg {
+    background: linear-gradient(-45deg, #0d6efd, #6610f2, #d63384, #fd7e14);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* Stagger Animation for Lists */
+.stagger-item {
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: backwards;
+}
+
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* Image Zoom on Hover */
+.news-image img,
+.team-logo {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.1);
+}
+
+.team-cube:hover img {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* Smooth Scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Page Load Animation */
+body {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Link Hover Effect */
+a {
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    transform: translateX(3px);
+}
+
+/* Input Focus Animation */
+input:focus,
+select:focus,
+textarea:focus {
+    animation: glow 0.5s ease-out;
+}
+
+/* Success Animation */
+.success-animation {
+    animation: bounceIn 0.6s ease-out;
+}
+
+/* Error Shake */
+.error-animation {
+    animation: shake 0.5s ease-out;
+}
