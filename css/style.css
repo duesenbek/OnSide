@@ -969,8 +969,133 @@ h3 {
     font-size: 0.95rem;
 }
 
+/* Football Match Cards Styling */
+.match-card {
+    border: 2px solid var(--gray-light);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: var(--white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.match-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: var(--green);
+}
+
+.match-card .card-header {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    border-bottom: 3px solid var(--yellow);
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: bold;
+}
+
+.match-card .card-body {
+    padding: 1.5rem;
+}
+
+.match-score {
+    font-family: 'Fjalla One', serif;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--black);
+    min-width: 80px;
+    text-align: center;
+}
+
+.match-team {
+    font-family: 'Fjalla One', serif;
+    font-weight: 600;
+    color: var(--black);
+    text-align: center;
+    flex: 1;
+}
+
+.match-time {
+    font-family: 'Roboto Mono', monospace;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.badge.bg-danger {
+    background-color: var(--red) !important;
+    animation: pulse 2s infinite;
+}
+
+.badge.bg-success {
+    background-color: var(--green) !important;
+}
+
+.badge.bg-info {
+    background-color: #0ea5e9 !important;
+}
+
+.badge.bg-secondary {
+    background-color: #6b7280 !important;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* Loading states */
+.spinner-border {
+    color: var(--green) !important;
+}
+
+/* Alert styling for API key notice */
+.alert-warning {
+    background: linear-gradient(135deg, var(--yellow) 0%, #fde047 100%);
+    border: 2px solid var(--yellow);
+    color: var(--black);
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.alert-warning a {
+    color: var(--green);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.alert-warning a:hover {
+    color: var(--green-light);
+}
+
+/* Responsive adjustments for match cards */
+@media (max-width: 768px) {
+    .match-card .card-body {
+        padding: 1rem;
+    }
+    
+    .match-score {
+        font-size: 1.4rem;
+        min-width: 60px;
+    }
+    
+    .match-team {
+        font-size: 0.9rem;
+    }
+    
+    .match-time {
+        font-size: 0.8rem;
+    }
+}
+
 @media (max-width: 576px) {
     .footer {
         padding: 1.5rem 0;
+    }
+    
+    .match-card .d-flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .match-score {
+        font-size: 1.2rem;
     }
 }
